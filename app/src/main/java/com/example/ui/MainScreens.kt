@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -389,17 +390,17 @@ fun HomeScreenLayout(viewModel: GiftViewModel) {
                 Column {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Text(
-                            text = "Teke ",
+                            text = "Teke Man ",
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.White,
                             letterSpacing = (-0.5).sp
                         )
                         Text(
-                            text = "Gift",
+                            text = "Promotion",
                             fontSize = 24.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF388E3C), // Beautiful premium Green
+                            color = Color(0xFF4CAF50), // Beautiful premium Green
                             letterSpacing = (-0.5).sp
                         )
                     }
@@ -513,29 +514,29 @@ fun HomeScreenLayout(viewModel: GiftViewModel) {
         item {
             val bannerImages = remember {
                 listOf(
-                    "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1200&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=1200&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=1200&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=1200&auto=format&fit=crop",
-                    "https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=1200&auto=format&fit=crop"
+                    "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1600&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1512909006721-3d6018887383?q=80&w=1600&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=1600&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=1600&auto=format&fit=crop",
+                    "https://images.unsplash.com/photo-1523293182086-7651a899d37f?q=80&w=1600&auto=format&fit=crop"
                 )
             }
             val bannerTitles = remember {
                 listOf(
                     "Signature Handcrafted Chests",
-                    "Majestic Floral Designs",
-                    "Crimson Rose & Chocolate Box",
-                    "Gold Chronograph Watches",
-                    "Gilded Royal Porcelain Set"
+                    "Majestic Holiday Gift Cases",
+                    "Presidential Chronograph Set",
+                    "Royal Satin Ribbons Box",
+                    "Gilded Gold Cosmetics & Rose"
                 )
             }
             val bannerDescs = remember {
                 listOf(
                     "Exquisite handcrafted obsidian wood packaging.",
-                    "Bespoke arrangements with imported rare orchids.",
-                    "Preserved luxury red roses with 24K gold truffles.",
-                    "Masterful luxury timepieces and executive pens.",
-                    "Fine bone china delicately detailed in gold."
+                    "Artisanal luxury arrangements with festive chocolates.",
+                    "Masterful luxury mechanical timepieces.",
+                    "Premium decorated gifts with embossed golden seal.",
+                    "Fine boutique treasures wrapped in absolute luxury."
                 )
             }
 
@@ -548,75 +549,140 @@ fun HomeScreenLayout(viewModel: GiftViewModel) {
                 }
             }
 
+            // Beautiful interactive 3D rotations & scaling
             val rotationY3D by animateFloatAsState(
-                targetValue = -3f + (kotlin.math.sin(currentSlideIndex.toFloat() * 1.5f) * 2f),
-                animationSpec = tween(1200, easing = FastOutSlowInEasing),
+                targetValue = -5f + (kotlin.math.sin(currentSlideIndex.toFloat() * 1.5f) * 3f),
+                animationSpec = tween(1400, easing = EaseInOutCubic),
                 label = "3DRotation"
             )
             val scaleBanner by animateFloatAsState(
-                targetValue = 1.0f + (kotlin.math.cos(currentSlideIndex.toFloat() * 1.5f) * 0.02f),
-                animationSpec = tween(1200, easing = FastOutSlowInEasing),
+                targetValue = 1.02f + (kotlin.math.cos(currentSlideIndex.toFloat() * 1.2f) * 0.03f),
+                animationSpec = tween(1400, easing = EaseInOutCubic),
                 label = "3DScale"
             )
 
-            Card(
-                shape = RoundedCornerShape(24.dp),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(180.dp)
-                    .graphicsLayer {
-                        rotationY = rotationY3D
-                        scaleX = scaleBanner
-                        scaleY = scaleBanner
-                        cameraDistance = 12f
-                    }
-                    .shadow(12.dp, RoundedCornerShape(24.dp))
-                    .testTag("hero_banner"),
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Crossfade(
-                    targetState = currentSlideIndex,
-                    animationSpec = tween(1000),
-                    label = "BannerSlide"
-                ) { index ->
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        AsyncImage(
-                            model = bannerImages[index],
-                            contentDescription = "Promo Banner",
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop,
-                            placeholder = painterResource(id = R.drawable.img_luxury_hero_banner),
-                            error = painterResource(id = R.drawable.img_luxury_hero_banner)
+                Card(
+                    shape = RoundedCornerShape(24.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(190.dp)
+                        .graphicsLayer {
+                            rotationY = rotationY3D
+                            scaleX = scaleBanner
+                            scaleY = scaleBanner
+                            cameraDistance = 14f
+                        }
+                        .shadow(16.dp, RoundedCornerShape(24.dp), spotColor = Color(0xFFD4AF37))
+                        .border(1.5.dp, Color(0xFFD4AF37).copy(alpha = 0.6f), RoundedCornerShape(24.dp))
+                        .testTag("hero_banner"),
+                ) {
+                    Crossfade(
+                        targetState = currentSlideIndex,
+                        animationSpec = tween(1200, easing = EaseInOutSine),
+                        label = "BannerSlide"
+                    ) { index ->
+                        Box(modifier = Modifier.fillMaxSize()) {
+                            AsyncImage(
+                                model = bannerImages[index],
+                                contentDescription = "Promo Banner",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop,
+                                placeholder = painterResource(id = R.drawable.img_luxury_hero_banner),
+                                error = painterResource(id = R.drawable.img_luxury_hero_banner)
+                            )
+                            // Subtle radial gradient inside vertical gradient for high-end feeling
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .background(
+                                        Brush.verticalGradient(
+                                            listOf(
+                                                Color.Transparent,
+                                                Color(0x33000000),
+                                                Color(0xFA000000)
+                                            )
+                                        )
+                                    )
+                            )
+
+                            // Decorative visual border highlight
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .border(1.dp, Color(0x33FFFFFF), RoundedCornerShape(24.dp))
+                                    .padding(2.dp)
+                                    .border(0.5.dp, Color(0x1AFFFFFF), RoundedCornerShape(22.dp))
+                            )
+
+                            Column(
+                                modifier = Modifier
+                                    .align(Alignment.BottomStart)
+                                    .padding(horizontal = 24.dp, vertical = 20.dp)
+                            ) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier
+                                        .background(Color(0xFFD4AF37).copy(alpha = 0.85f), RoundedCornerShape(4.dp))
+                                        .padding(horizontal = 6.dp, vertical = 2.dp)
+                                ) {
+                                    Text(
+                                        text = "LIMITED COLLECTION",
+                                        fontSize = 8.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color.Black,
+                                        letterSpacing = 1.5.sp
+                                    )
+                                }
+                                Spacer(modifier = Modifier.height(6.dp))
+                                Text(
+                                    text = bannerTitles[index],
+                                    style = MaterialTheme.typography.titleLarge,
+                                    color = Color(0xFFFDF5E6),
+                                    fontWeight = FontWeight.Bold,
+                                    fontFamily = FontFamily.Serif
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(
+                                    text = bannerDescs[index],
+                                    fontSize = 11.sp,
+                                    color = Color.White.copy(alpha = 0.8f),
+                                    maxLines = 2,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            }
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                // Beautiful custom active dynamic indicator pill row
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    bannerImages.indices.forEach { idx ->
+                        val active = idx == currentSlideIndex
+                        val widthAnim by animateDpAsState(
+                            targetValue = if (active) 18.dp else 6.dp,
+                            animationSpec = spring(stiffness = Spring.StiffnessMedium),
+                            label = "dot_width"
+                        )
+                        val colorAnim by animateColorAsState(
+                            targetValue = if (active) Color(0xFFD4AF37) else Color.White.copy(alpha = 0.3f),
+                            animationSpec = tween(500),
+                            label = "dot_color"
                         )
                         Box(
                             modifier = Modifier
-                                .fillMaxSize()
-                                .background(
-                                    Brush.verticalGradient(
-                                        listOf(Color.Transparent, Color(0xE6000000))
-                                    )
-                                )
+                                .size(width = widthAnim, height = 6.dp)
+                                .clip(CircleShape)
+                                .background(colorAnim)
                         )
-
-                        Column(
-                            modifier = Modifier
-                                .align(Alignment.BottomStart)
-                                .padding(20.dp)
-                        ) {
-                            Text(
-                                text = bannerTitles[index],
-                                style = MaterialTheme.typography.titleLarge,
-                                color = Color(0xFFD4AF37),
-                                fontWeight = FontWeight.Bold
-                            )
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text(
-                                text = bannerDescs[index],
-                                fontSize = 11.sp,
-                                color = Color.White.copy(alpha = 0.85f),
-                                maxLines = 2,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
                     }
                 }
             }
@@ -693,7 +759,8 @@ fun HomeScreenLayout(viewModel: GiftViewModel) {
                 }
             }
         } else {
-            items(filteredList.chunked(2)) { pair ->
+            val chunkedList = filteredList.chunked(2)
+            itemsIndexed(chunkedList) { index, pair ->
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(16.dp)
@@ -720,6 +787,11 @@ fun HomeScreenLayout(viewModel: GiftViewModel) {
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
+
+                // Insert the horizontal scrollable 4-column spotlights grid after the 4th product
+                if (index == 1 || (chunkedList.size < 2 && index == chunkedList.size - 1)) {
+                    PremiumPromoGridView(viewModel = viewModel)
+                }
             }
         }
 
@@ -1671,24 +1743,10 @@ fun ProductDetailSheet(
                 }
             }
 
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
-            // Delivery and packaging details
-            Text(
-                text = LocalizationManager.string("delivery_info"),
-                style = MaterialTheme.typography.titleMedium,
-                color = Color(0xFFD4AF37)
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Icon(imageVector = Icons.Default.LocalShipping, contentDescription = "Delivery", tint = Color(0xFF2E7D32), modifier = Modifier.size(20.dp))
-                Spacer(modifier = Modifier.width(10.dp))
-                Text(
-                    text = LocalizationManager.string("delivery_desc"),
-                    fontSize = 12.sp,
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                )
-            }
+            // Premium Professional Video Player
+            PremiumVideoPlayer(product = product)
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -2161,6 +2219,353 @@ fun AIAssistantDrawer(
                     Icon(imageVector = Icons.Default.Send, contentDescription = "Send", tint = Color.Black, modifier = Modifier.size(18.dp))
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun PremiumPromoGridView(viewModel: GiftViewModel) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 12.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(bottom = 12.dp)
+        ) {
+            Text(
+                text = "⭐ " + (if (LocalizationManager.currentLanguage == com.example.data.Language.English) "Special Luxury Spotlights" else "ልዩ የቅንጦት ማስተዋወቂያዎች"),
+                style = MaterialTheme.typography.titleMedium,
+                color = Color(0xFFD4AF37),
+                fontWeight = FontWeight.Bold
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Text(
+                text = if (LocalizationManager.currentLanguage == com.example.data.Language.English) "4K UHD" else "4K ጥራት",
+                fontSize = 10.sp,
+                color = Color(0xFF4CAF50),
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .border(1.dp, Color(0xFF4CAF50), RoundedCornerShape(4.dp))
+                    .padding(horizontal = 4.dp, vertical = 2.dp)
+            )
+        }
+
+        // Horizontal Scrollable Row of 4 beautiful columns
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .horizontalScroll(rememberScrollState()),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            val items = listOf(
+                Triple("Royal Choice", "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=1600", 1),
+                Triple("Presidential watch", "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?q=80&w=1600", 2),
+                Triple("Celebration pack", "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?q=80&w=1600", 3),
+                Triple("Signature Chest", "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1600", 4)
+            )
+
+            items.forEach { (label, url, productId) ->
+                Box(
+                    modifier = Modifier
+                        .width(160.dp)
+                        .height(240.dp)
+                        .clip(RoundedCornerShape(20.dp))
+                        .border(1.dp, Color(0x33D4AF37), RoundedCornerShape(20.dp))
+                        .clickable {
+                            val prod = com.example.data.ProductCatalog.items.find { it.id == productId }
+                            if (prod != null) {
+                                viewModel.viewProductDetails(prod)
+                            }
+                        }
+                ) {
+                    AsyncImage(
+                        model = url,
+                        contentDescription = label,
+                        modifier = Modifier.fillMaxSize(),
+                        contentScale = ContentScale.Crop,
+                        placeholder = painterResource(id = R.drawable.img_luxury_gift_logo),
+                        error = painterResource(id = R.drawable.img_luxury_gift_logo)
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                Brush.verticalGradient(
+                                    listOf(Color.Transparent, Color(0x7F000000), Color(0xDD000000))
+                                )
+                            )
+                    )
+
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(12.dp),
+                        verticalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .background(Color(0xE62E7D32), RoundedCornerShape(6.dp))
+                                .padding(horizontal = 6.dp, vertical = 2.dp)
+                        ) {
+                            Text(
+                                text = "EXCLUSIVE",
+                                fontSize = 8.sp,
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+
+                        Column {
+                            Text(
+                                text = label,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFFD4AF37),
+                                fontFamily = FontFamily.Serif
+                            )
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.PlayCircle,
+                                    contentDescription = "Play Video",
+                                    tint = Color(0xFF4CAF50),
+                                    modifier = Modifier.size(14.dp)
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = "See Video",
+                                    fontSize = 10.sp,
+                                    color = Color.White.copy(alpha = 0.8f)
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+    }
+}
+
+@Composable
+fun PremiumVideoPlayer(product: com.example.data.Product) {
+    var isPlaying by remember { mutableStateOf(false) }
+    var isMuted by remember { mutableStateOf(false) }
+    var currentTime by remember { mutableStateOf(0f) }
+    val totalTime = 165f // 2 mins 45 secs
+    var isBuffering by remember { mutableStateOf(false) }
+    var quality by remember { mutableStateOf("4K UHD") }
+    var showQualityMenu by remember { mutableStateOf(false) }
+
+    LaunchedEffect(isPlaying) {
+        if (isPlaying) {
+            isBuffering = true
+            delay(1000)
+            isBuffering = false
+        }
+    }
+
+    LaunchedEffect(isPlaying, isBuffering) {
+        if (isPlaying && !isBuffering) {
+            while (currentTime < totalTime) {
+                delay(1000)
+                currentTime += 1f
+            }
+            if (currentTime >= totalTime) {
+                isPlaying = false
+                currentTime = 0f
+            }
+        }
+    }
+
+    val formatTime = { secs: Float ->
+        val m = (secs / 60).toInt()
+        val s = (secs % 60).toInt()
+        String.format("%02d:%02d", m, s)
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(20.dp))
+            .background(Color(0xFF0F0F11))
+            .border(1.dp, Color(0xFFD4AF37).copy(alpha = 0.3f), RoundedCornerShape(20.dp))
+            .padding(12.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(bottom = 8.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Default.PlayCircle,
+                contentDescription = null,
+                tint = Color(0xFFD4AF37),
+                modifier = Modifier.size(18.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = if (LocalizationManager.currentLanguage == com.example.data.Language.English) "Premium Showcase Video" else "ልዩ የማስተዋወቂያ ቪዲዮ",
+                fontSize = 13.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Box {
+                Text(
+                    text = quality,
+                    fontSize = 10.sp,
+                    color = Color(0xFF4CAF50),
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .border(1.dp, Color(0xFF4CAF50), RoundedCornerShape(4.dp))
+                        .clickable { showQualityMenu = true }
+                        .padding(horizontal = 6.dp, vertical = 2.dp)
+                )
+                DropdownMenu(
+                    expanded = showQualityMenu,
+                    onDismissRequest = { showQualityMenu = false },
+                    modifier = Modifier.background(Color(0xFF1B1B1F))
+                ) {
+                    listOf("4K UHD", "1080p HD", "720p SD").forEach { q ->
+                        DropdownMenuItem(
+                            text = { Text(text = q, color = Color.White, fontSize = 12.sp) },
+                            onClick = {
+                                quality = q
+                                showQualityMenu = false
+                            }
+                        )
+                    }
+                }
+            }
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(180.dp)
+                .clip(RoundedCornerShape(16.dp))
+                .background(Color.Black),
+            contentAlignment = Alignment.Center
+        ) {
+            AsyncImage(
+                model = product.imageUrl ?: "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=1200",
+                contentDescription = "Video Poster",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        Brush.verticalGradient(
+                            listOf(Color.Transparent, Color(0xCC000000))
+                        )
+                    )
+            )
+
+            if (isBuffering) {
+                CircularProgressIndicator(
+                    color = Color(0xFFD4AF37),
+                    modifier = Modifier.size(40.dp)
+                )
+            } else {
+                IconButton(
+                    onClick = { isPlaying = !isPlaying },
+                    modifier = Modifier
+                        .size(56.dp)
+                        .background(Color.Black.copy(alpha = 0.6f), CircleShape)
+                        .border(1.5.dp, Color(0xFFD4AF37), CircleShape)
+                ) {
+                    Icon(
+                        imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
+                        contentDescription = "Play/Pause",
+                        tint = Color(0xFFD4AF37),
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
+            }
+
+            IconButton(
+                onClick = { isMuted = !isMuted },
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(8.dp)
+                    .size(32.dp)
+                    .background(Color.Black.copy(alpha = 0.5f), CircleShape)
+            ) {
+                Icon(
+                    imageVector = if (isMuted) Icons.Default.VolumeOff else Icons.Default.VolumeUp,
+                    contentDescription = "Mute Toggle",
+                    tint = Color.White,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
+
+            if (isPlaying && !isBuffering) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(8.dp)
+                        .background(Color(0x994CAF50), RoundedCornerShape(4.dp))
+                        .padding(horizontal = 6.dp, vertical = 2.dp)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .size(6.dp)
+                            .background(Color.Red, CircleShape)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = "PLAYING (" + quality + ")",
+                        fontSize = 8.sp,
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(
+                text = formatTime(currentTime),
+                fontSize = 11.sp,
+                color = Color.White.copy(alpha = 0.7f),
+                modifier = Modifier.width(36.dp)
+            )
+
+            Slider(
+                value = currentTime,
+                onValueChange = { currentTime = it },
+                valueRange = 0f..totalTime,
+                modifier = Modifier
+                    .weight(1f)
+                    .height(24.dp),
+                colors = SliderDefaults.colors(
+                    thumbColor = Color(0xFFD4AF37),
+                    activeTrackColor = Color(0xFFD4AF37),
+                    inactiveTrackColor = Color.White.copy(alpha = 0.15f)
+                )
+            )
+
+            Text(
+                text = formatTime(totalTime),
+                fontSize = 11.sp,
+                color = Color.White.copy(alpha = 0.7f),
+                modifier = Modifier.width(36.dp),
+                textAlign = TextAlign.End
+            )
         }
     }
 }

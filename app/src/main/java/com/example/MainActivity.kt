@@ -14,7 +14,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.ui.GiftViewModel
 import com.example.ui.MainScreen
 import com.example.ui.SplashScreen
+import com.example.ui.OnboardingScreen
 import com.example.ui.theme.MyApplicationTheme
+
+enum class AppScreenState {
+    Splash,
+    Onboarding,
+    Main
+}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,23 +37,31 @@ class MainActivity : ComponentActivity() {
             val isDark by viewModel.isDarkModeFlow.collectAsStateWithLifecycle()
 
             MyApplicationTheme(darkTheme = isDark) {
-                var showSplash by remember { mutableStateOf(true) }
+                var currentScreen by remember { mutableStateOf(AppScreenState.Splash) }
 
                 AnimatedContent(
-                    targetState = showSplash,
+                    targetState = currentScreen,
                     transitionSpec = {
-                        fadeIn(animationSpec = tween(500)) togetherWith fadeOut(animationSpec = tween(500))
+                        fadeIn(animationSpec = tween(600)) togetherWith fadeOut(animationSpec = tween(600))
                     },
-                    label = "splash_routing"
-                ) { isSplashActive ->
-                    if (isSplashActive) {
-                        SplashScreen(
-                            onSplashFinished = { showSplash = false }
-                        )
-                    } else {
-                        MainScreen(
-                            viewModel = viewModel
-                        )
+                    label = "app_routing"
+                ) { screenState ->
+                    when (screenState) {
+                        AppScreenState.Splash -> {
+                            SplashScreen(
+                                onSplashFinished = { currentScreen = AppScreenState.Onboarding }
+                            )
+                        }
+                        AppScreenState.Onboarding -> {
+                            OnboardingScreen(
+                                onOnboardingFinished = { currentScreen = AppScreenState.Main }
+                            )
+                        }
+                        AppScreenState.Main -> {
+                            MainScreen(
+                                viewModel = viewModel
+                            )
+                        }
                     }
                 }
             }
